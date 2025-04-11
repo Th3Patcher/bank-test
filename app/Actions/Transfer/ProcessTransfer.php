@@ -3,7 +3,7 @@
 namespace App\Actions\Transfer;
 
 use App\DTOs\Transfer\ProcessDTO;
-use App\Exceptions\AuthExceptions\DomainException;
+use App\Exceptions\DomainException;
 use App\Services\Transfer\TransferService;
 use Illuminate\Http\JsonResponse;
 

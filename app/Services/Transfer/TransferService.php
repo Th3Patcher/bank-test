@@ -3,7 +3,7 @@
 namespace App\Services\Transfer;
 
 use App\DTOs\Transfer\ResultDTO;
-use App\Exceptions\AuthExceptions\DomainException;
+use App\Exceptions\DomainException;
 use App\Models\Account;
 use App\Services\Currency\CurrencyService;
 use Illuminate\Support\Facades\DB;
