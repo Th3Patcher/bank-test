@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\Transfer\ProcessTransfer;
 use App\DTOs\Transfer\ProcessDTO;
-use App\Exceptions\AuthExceptions\DomainException;
+use App\Exceptions\DomainException;
 use App\Http\Requests\TransferRequests\TransferRequest;
 use Illuminate\Http\JsonResponse;
 

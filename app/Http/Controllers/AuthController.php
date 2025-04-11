@@ -6,7 +6,7 @@ use App\Actions\Auth\LoginUser;
 use App\Actions\Auth\RegisterUser;
 use App\DTOs\Auth\LoginDTO;
 use App\DTOs\Auth\RegisterDTO;
-use App\Exceptions\AuthExceptions\DomainException;
+use App\Exceptions\DomainException;
 use App\Http\Requests\AuthRequests\LoginRequest;
 use App\Http\Requests\AuthRequests\RegisterRequest;
 use Illuminate\Http\JsonResponse;

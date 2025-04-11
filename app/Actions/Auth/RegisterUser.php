@@ -3,7 +3,7 @@
 namespace App\Actions\Auth;
 
 use App\DTOs\Auth\RegisterDTO;
-use App\Exceptions\AuthExceptions\DomainException;
+use App\Exceptions\DomainException;
 use App\Repositories\UserRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
