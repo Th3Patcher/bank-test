@@ -25,10 +25,11 @@ readonly class ProcessTransfer
             throw new DomainException('You cannot transfer to the same account', 422, 'transfer');
         }
 
-        $transferData = $this->service->transfer($data->sender, $data->getter, $data->amount);
+        $transaction = $this->service->transfer($data->sender, $data->getter, $data->amount);
 
         return response()->json([
-            'message' => "Transfer from '{$transferData->sender->number}' to '{$transferData->getter->number}' has been successfully transferred $transferData->amount {$transferData->getter->currency}",
+            'transaction' => "$transaction->id",
+            'status' => "{$transaction->status->value}",
         ]);
     }
 }

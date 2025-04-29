@@ -3,8 +3,9 @@
 namespace App\DTOs\Transfer;
 
 use App\Models\Account;
+use App\Models\Transaction;
 
-readonly class ResultDTO
+readonly class TransactionDTO
 {
     /**
      * @param Account $sender
@@ -12,7 +13,7 @@ readonly class ResultDTO
      * @param float $amount
      */
     public function __construct(
-        public Account $sender,
+        public Transaction $transaction,
         public Account $getter,
         public float   $amount,
     ) {}

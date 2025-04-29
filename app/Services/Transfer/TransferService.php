@@ -2,39 +2,23 @@
 
 namespace App\Services\Transfer;
 
-use App\DTOs\Transfer\ResultDTO;
-use App\Exceptions\DomainException;
+use App\Jobs\ProcessTransactionJob;
 use App\Models\Account;
-use App\Services\Currency\CurrencyService;
-use Illuminate\Support\Facades\DB;
+use App\Models\Transaction;
 
 class TransferService
 {
-    /**
-     * @param string $fromNumber
-     * @param string $toNumber
-     * @param float $amount
-     * @return ResultDTO
-     */
-    public function transfer(string $fromNumber, string $toNumber, float $amount): ResultDTO
+    public function transfer(string $fromNumber, string $toNumber, float $amount): Transaction
     {
-        return DB::transaction(function () use ($fromNumber, $toNumber, $amount) {
-            $from = Account::where('number', $fromNumber)->lockForUpdate()->firstOrFail();
-            $to = Account::where('number', $toNumber)->lockForUpdate()->firstOrFail();
+        $transaction = Transaction::create([
+            'from_account_id' => Account::firstWhere('number', $fromNumber)->id,
+            'to_account_id' => Account::firstWhere('number', $toNumber)->id,
+            'amount' => $amount,
+            'status' => 'pending',
+        ]);
 
-            if ($from->balance < $amount) {
-                throw new DomainException('Not enough balance', 400, 'transfer');
-            }
+        ProcessTransactionJob::dispatch($transaction->id);
 
-            $convertedAmount = app()->make(CurrencyService::class)->convert($from->currency, $to->currency, $amount);
-
-            $from->balance -= $amount;
-            $to->balance += $convertedAmount;
-
-            $from->save();
-            $to->save();
-
-            return new ResultDTO($from, $to, round($convertedAmount, 2));
-        });
+        return $transaction;
     }
 }
